@@ -1,0 +1,13 @@
+syntax = "proto3";
+package account_service;
+
+message AddUserRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+  string surname = 4;
+}
+
+message DeleteUserRequest {
+  uint32 user_id = 1;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+package order_service;
+
+import "google/protobuf/empty.proto";
+
+import "order-service/request.proto";
+import "order-service/response.proto";
+
+
+service OrderService {
+  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse) {}
+  rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse) {}
+  rpc FindOrderById(FindOrderRequest) returns (FindOrderResponse) {}
+  rpc FindOrderByUserId(FindOrderByUserIdRequest) returns (FindOrderResponse) {}
+  rpc GetAllOrders(google.protobuf.Empty) returns (GetAllOrdersResponse) {}
+}

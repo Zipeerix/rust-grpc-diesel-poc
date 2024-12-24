@@ -1,0 +1,20 @@
+syntax = "proto3";
+package order_service;
+
+import "order-service/order.proto";
+
+message AddOrderRequest {
+  Order order = 1;
+}
+
+message DeleteOrderRequest {
+  uint32 order_id = 1;
+}
+
+message FindOrderRequest {
+  uint32 order_id = 1;
+}
+
+message FindOrderByUserIdRequest {
+  uint32 user_id = 1;
+}

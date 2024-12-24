@@ -1,0 +1,14 @@
+syntax = "proto3";
+package order_service;
+
+message PurchasedItem {
+  uint32 item_id = 1;
+  uint32 price = 2;
+  uint32 quantity = 3;
+}
+
+message Order {
+  uint32 user_id = 1;
+  repeated PurchasedItem items = 2;
+  string address = 3;
+}

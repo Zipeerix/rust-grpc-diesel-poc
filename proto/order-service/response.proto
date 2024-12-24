@@ -1,0 +1,40 @@
+syntax = "proto3";
+package order_service;
+
+import "google/protobuf/empty.proto";
+
+import "order-service/order.proto";
+import "order-service/error.proto";
+
+message FindOrderResult {
+  Order order = 1;
+}
+
+message FindOrderResponse {
+  oneof result {
+    FindOrderResult success = 1;
+    OrderServiceError error = 2;
+  }
+}
+
+message GetAllOrdersResponse {
+  repeated Order orders = 1;
+}
+
+message DeleteOrderResponse {
+  oneof result {
+    google.protobuf.Empty success = 1;
+    OrderServiceError error = 2;
+  }
+}
+
+message AddOrderResult {
+  uint32 order_id = 1;
+}
+
+message AddOrderResponse {
+  oneof result {
+    AddOrderResult success = 1;
+    OrderServiceError error = 2;
+  }
+}

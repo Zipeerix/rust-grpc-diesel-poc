@@ -6,6 +6,11 @@ pub struct GenericServerConfiguration {
     pub port: u16,
 }
 
+#[derive(Deserialize)]
+pub struct GeneralConfiguration {
+    pub database_timeout: u64,
+}
+
 impl GenericServerConfiguration {
     pub fn get_address(&self) -> String {
         format!("{}:{}", self.host, self.port)
@@ -14,6 +19,7 @@ impl GenericServerConfiguration {
 
 #[derive(Deserialize)]
 pub struct Configuration {
+    pub general: GeneralConfiguration,
     pub server: GenericServerConfiguration,
     pub metrics: GenericServerConfiguration,
 }

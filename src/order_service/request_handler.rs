@@ -1,12 +1,19 @@
-use crate::grpc_server::order_service::order_service_server::OrderService;
-use crate::grpc_server::order_service::{
-    AddOrderRequest, AddOrderResponse, DeleteOrderRequest, DeleteOrderResponse,
-    FindOrderByUserIdRequest, FindOrderRequest, FindOrderResponse, GetAllOrdersResponse,
-};
+use crate::database::{DbPool, GrpcDbPoolWrapper};
+use crate::order_service::proto::order_service_server::OrderService;
+use crate::order_service::proto::*;
 use tonic::{Request, Response, Status};
 
-#[derive(Default)]
-pub struct OrderServiceHandler {}
+pub struct OrderServiceHandler {
+    db: GrpcDbPoolWrapper,
+}
+
+impl OrderServiceHandler {
+    pub fn new(db: DbPool) -> OrderServiceHandler {
+        OrderServiceHandler {
+            db: GrpcDbPoolWrapper::new(db),
+        }
+    }
+}
 
 #[tonic::async_trait]
 impl OrderService for OrderServiceHandler {
@@ -20,7 +27,7 @@ impl OrderService for OrderServiceHandler {
     async fn delete_order(
         &self,
         request: Request<DeleteOrderRequest>,
-    ) -> Result<Response<DeleteOrderResponse>, Status> {
+    ) -> Result<Response<()>, Status> {
         todo!()
     }
 

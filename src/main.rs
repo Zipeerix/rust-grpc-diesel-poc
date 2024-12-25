@@ -2,25 +2,25 @@ use crate::config::load_configuration;
 use crate::grpc_server::start_grpc_server;
 use crate::metrics_server::start_metrics_server;
 use clap::Parser;
-use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use dotenvy::dotenv;
 use log::{error, info};
 use std::error::Error;
 use std::sync::Arc;
+use std::thread::JoinHandle;
 
-mod account_service_handler;
+mod account_service;
 mod config;
 mod database;
 mod grpc_server;
 mod metrics_server;
-mod order_service_handler;
+mod order_service;
 mod schema;
 
 #[derive(Parser, Debug)]
 #[command(
     version,
     about,
-    long_about = "Proof of concept of Rust gRPC application"
+    long_about = "Proof of concept - Rust gRPC application"
 )]
 struct CommandLineArguments {
     /// Path to configuration file

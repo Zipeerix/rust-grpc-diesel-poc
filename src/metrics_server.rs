@@ -1,20 +1,19 @@
+use crate::config::Configuration;
 use hyper::{
     header::CONTENT_TYPE,
     service::{make_service_fn, service_fn},
     Body, Request, Response, Server,
 };
+use lazy_static::lazy_static;
+use log::info;
+use prometheus::{opts, register_counter};
 use prometheus::{register_histogram_vec, Counter, Encoder, HistogramVec, TextEncoder};
 use std::net::SocketAddr;
 use std::str::FromStr;
 
-use crate::config::Configuration;
-use lazy_static::lazy_static;
-use log::info;
-use prometheus::{labels, opts, register_counter};
-
-//FOR UPGRADING TO 1.5
-//https://hyper.rs/guides/1/upgrading/
-//https://github.com/hyperium/hyper/discussions/3471
+// TODO FOR UPGRADING TO 1.5
+// TODO https://hyper.rs/guides/1/upgrading/
+// TODO https://github.com/hyperium/hyper/discussions/3471
 
 lazy_static! {
     static ref METRICS_GET_LATENCY: HistogramVec = register_histogram_vec!(
@@ -56,10 +55,8 @@ async fn serve_req(_req: Request<Body>) -> Result<Response<Body>, hyper::Error> 
 
 pub async fn start_metrics_server(config: &Configuration) -> Result<(), hyper::Error> {
     let raw_address = config.metrics.get_address();
-    let address = SocketAddr::from_str(&raw_address).expect(&format!(
-        "Unable to parse metrics server address: {}",
-        raw_address
-    ));
+    let address = SocketAddr::from_str(&raw_address)
+        .unwrap_or_else(|_| panic!("Unable to parse metrics server address: {}", raw_address));
 
     info!("Starting metrics server at http://{}", &address);
 

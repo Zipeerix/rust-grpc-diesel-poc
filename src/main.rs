@@ -6,7 +6,6 @@ use dotenvy::dotenv;
 use log::{error, info};
 use std::error::Error;
 use std::sync::Arc;
-use std::thread::JoinHandle;
 
 mod account_service;
 mod config;
@@ -27,9 +26,6 @@ struct CommandLineArguments {
     #[arg(short, long)]
     config: String,
 }
-
-//TODO WHEN TO USE 'use' AND WHEN NAMESPACE ANDREDUCEIFNEEDED
-//TODO: docker postgress compose and script to run db and ap
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
